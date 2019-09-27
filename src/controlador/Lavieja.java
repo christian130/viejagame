@@ -38,11 +38,11 @@ public class Lavieja {
     /* Salida: (boolean)
      *  Creado por : Christian Vivas Santiago christian130@gmail.com
      * Fecha Creación: 02-09-2019
-     * Fecha Modificacion:
+     * Fecha Modificacion: 06-09-2019
      * Descripcion: Creacion del metodo hecho en PHP --- Traduccion del mismo. Metodo creado para hacer un check a la pizarra... basicamente es un intento de mi parte para extenderlo    *
-     * Modificaciones:  se minimiza el codigo, para una posible futura implementacion   * 
+     * Modificaciones:  se minimiza el codigo, para una posible futura implementacion. Se cambia el nombre del metodo   * 
      */
-	public boolean CheckBoard(int[][] board){
+	public boolean RevisarTablero(int[][] board){
 		if (board!=null){
 			board=this.Board;
 		}
@@ -68,8 +68,8 @@ public class Lavieja {
      *  Creado por : Christian Vivas Santiago christian130@gmail.com
      * Fecha Creación: 06-09-2019
 	 * Fecha Modificacion: 06-09-2019
-     * Descripcion:    *
-     * Modificaciones:   * 
+     * Descripcion: recorre el arreglo definido arreglo y revisa si contiene trazas de    *
+     * Modificaciones:  se utiliza la estructura Arrays.asList() para convertir el arreglo a una lista List<int> lista = new ArrayList<int>
      */
 	public boolean revisarCuadricula(int abcisa,int ordenada){
 		int[] arreglo={0,1,2};
@@ -78,19 +78,34 @@ public class Lavieja {
 			jk=false;
 		}else{
                     jk=true;
-                }
-		/*for(int g=0;g<arreglo.length;g++){
-			if ((!(abcisa==arreglo[g])) || (!(ordenada==arreglo[g])) ){
-				jk=false;
-			}
-		}
-		for(int g2=0;g2<arreglo.length;g2++){
-			if ((ordenada==arreglo[g2]) || (abcisa==arreglo[g2]) ){
-				jk=true;
-			}
-		}*/
+                }		
 		return jk;
 	}
+        
+        ////////////////////////////////////////////////////////////////////////
+    /* Salida: (boolean)
+     *  Creado por : Christian Vivas Santiago christian130@gmail.com
+     * Fecha Creación: 06-09-2019
+	 * Fecha Modificacion: 06-09-2019
+     * Descripcion: recorre el arreglo previamente convertido en una lista para verificar que el JUGADOR_A el JUGADOR_B esta permitido     *
+     * Modificaciones: 
+     */
+        public boolean revisarJugador( int jugadorA ) {
+            int[] jugadores={JUGADOR_A,JUGADOR_B};
+            if (Arrays.asList(jugadores).contains(jugadorA)){
+                return true;
+            }else{
+                return false;
+            }
+	}
+        //////////////////////////////////////////////////////////////////////// 
+    /* Salida: (boolean)
+     *  Creado por : Christian Vivas Santiago christian130@gmail.com
+     * Fecha Creación: 05-07-2018
+	 * Fecha Modificacion: 10-07-2018
+     * Descripcion: (por motivo de tiempo tengo que entregar este codigo y se me)    *
+     * Modificaciones:  se minimiza el codigo, para una posible futura implementacion   * 
+     */
 	
 	
 	/*public static void main(String[] args)

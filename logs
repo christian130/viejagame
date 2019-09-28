@@ -1,0 +1,41 @@
+commit c57067e4c7461ac3cfdd98c522f38621ea5aedf1
+Author: christian130 <christian130@gmail.com>
+Date:   Fri Sep 28 23:02:30 2019 -0400
+
+    terminado del traslado del codigo
+
+commit 1cef1c499fb0e45397f0d75e6584da93defb4212
+Author: christian130 <christian130@gmail.com>
+Date:   Sun Sep 28 02:33:32 2019 -0400
+
+    a dormir
+
+commit b673b142d6c97474510d735679eb200e17373758
+Author: christian130 <christian130@gmail.com>
+Date:   Sat Sep 27 19:54:58 2019 -0400
+
+    pareciera que se tiene una finalizacion...
+
+commit 24684c8bc400287473f775bcf6756dfeb42523db
+Author: christian130 <christian130@gmail.com>
+Date:   Sat Sep 27 17:23:09 2019 -0400
+
+    se consigue traducir correctamente el codigo con el uso adecuado de estructuras propias en Java, es decir, evitar el uso de estructuras de datos tipo primitivas como int boolean char etc
+
+commit da9c2aa1776149bf0f382ee9fd488b7bc9b9415d
+Author: christian130 <christian130@gmail.com>
+Date:   Fri Sep 27 16:28:04 2019 -0400
+
+    se esta añadiendo el metodo principal getBestMove... este metodo es vital para el funcionamiento del sistema ya que es el que va a calcular y decirnos cual es el mejor movimiento que viene...
+
+commit eb26580e82f7aabfe262de6381e413f8ae2a53f7
+Author: christian130 <christian130@gmail.com>
+Date:   Fri Sep 27 12:47:38 2019 -0400
+
+    terminado de algunos metodos, e inclusion de la licencia de este repositorio
+
+commit 7ada65903a320f101db9b75bc992eff3db224933
+Author: christian130 <christian130@gmail.com>
+Date:   Fri Sep 27 12:15:45 2019 -0400
+
+    se muda el codigo de Eclipse a NEtbeans

@@ -14,6 +14,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -48,41 +50,59 @@ public class JavaApplication3 {
     /**
      * @param args the command line arguments
      */
-    public static void jugar() throws IOException{
-           // Random randomGenerator = new Random();
-       // int randNumber = randomGenerator.nextInt(0);
+    public void jugar(Lavieja lavieja, Lavieja.bestRatingClass bestrating) throws IOException, NullPointerException {
+        // Random randomGenerator = new Random();
+        // int randNumber = randomGenerator.nextInt(0);
         //System.out.println(String.valueOf(randNumber));
-       // System.exit(0);
-       
-        Lavieja lavieja = new Lavieja("nuevojuego");
-        Lavieja.bestRatingClass bestrating = lavieja.new bestRatingClass();
-        if (lavieja.seAcabo()){
-            System.err.println("----------se acabo-----");
-        }
-        
+        // System.exit(0);
 
         //lavieja.jugar(0, 0, 0)
         //System.out.println(String.valueOf(!lavieja.revisarCuadricula(1, 1)));
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        if (!(lavieja.seAcabo())) {
 
-        String jugadaX = br.readLine();
-        String jugadaY = br.readLine();
-        lavieja.jugar(lavieja.JUGADOR_A, Integer.valueOf(jugadaX), Integer.valueOf(jugadaY));
-        List<int[]> resultado = new ArrayList<int[]>();
-        int counter = 0;
-        System.err.println(String.valueOf(lavieja.getBestMove(lavieja.JUGADOR_B, true, bestrating)[0]));
-        System.err.println(String.valueOf(lavieja.getBestMove(lavieja.JUGADOR_B, true, bestrating)[1]));
-        
-    }
-    
-    public static void main(String[] args) throws IOException {
-        while(true){
-            jugar();
-            //String jugadaX2 = br.readLine();
-            //String jugadaY2 = br.readLine();
         }
-        
-    
+        /* if (lavieja.seAcabo()) {
+            System.err.println("----------se acabo-----");
+        }else{
+            jugar(lavieja, bestrating);
+        }*/
+    }
+
+    public static void main(String[] args) throws IOException {
+        Lavieja lavieja = new Lavieja("nuevojuego");
+        Lavieja.bestRatingClass bestrating = lavieja.new bestRatingClass();
+        JavaApplication3 application3 = new JavaApplication3();
+
+        while (!lavieja.seAcabo()) {
+
+            try {
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+                String jugadaX = br.readLine();
+                String jugadaY = br.readLine();
+                lavieja.jugar(lavieja.JUGADOR_A, Integer.valueOf(jugadaX), Integer.valueOf(jugadaY));
+                List<int[]> resultado = new ArrayList<int[]>();
+                int counter = 0;
+
+                int[] resultados = lavieja.getBestMove(lavieja.JUGADOR_B, true, bestrating);
+                System.out.println("longitud de los resultados" + resultados.length);
+                System.err.println("comienzo a jugar por" + String.valueOf(resultados[0]) + String.valueOf(resultados[1]));
+
+                //System.err.println(String.valueOf(lavieja.getBestMove(lavieja.JUGADOR_B, true, bestrating)[1]));
+                lavieja.jugar(lavieja.JUGADOR_B, Integer.valueOf(resultados[0]), Integer.valueOf(resultados[1]));
+            } catch (IOException iOException) {
+                System.err.println("----------se acabo-----");
+                break;
+            } catch (NullPointerException nullPointerException) {
+                System.err.println("----------se acabo-----");
+                break;
+            }
+
+        }
+
+        //String jugadaX2 = br.readLine();
+        //String jugadaY2 = br.readLine();
+
         /* while (!lavieja.seAcabo()) {
             resultado.add(lavieja.getBestMove(lavieja.JUGADOR_B, false, 0));            
             
@@ -93,7 +113,6 @@ public class JavaApplication3 {
             System.out.println("aun no se ha acabado la maquina va por"+resultado.get(counter)[0]+resultado.get(counter)[1]); 
             counter++;
         }*/
-
     }
 
 }

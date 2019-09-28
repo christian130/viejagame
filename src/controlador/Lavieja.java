@@ -154,8 +154,11 @@ public class Lavieja {
             return false;
 
         } else {
+           // List<Integer> lista = new ArrayList<Integer>(); 
+            //lista.add(this.Board[positionX][positionY]);
+            
 
-            if (!(String.valueOf(this.Board[positionX][positionY]).isEmpty())) {
+            if (this.Board[positionX][positionY]==0) {
                 return true;
             } else {
                 return false;
@@ -254,11 +257,32 @@ public class Lavieja {
             return -1;
         }
         int total = 0;
+        aa:
         for (int mmgvo = 0; mmgvo < columnas.length; mmgvo++) {
             int[] buscar = {positionx, positiony};
-            if (!(Arrays.asList(columnas[mmgvo]).contains(buscar))) {
-                continue;
+            //List<Integer[][]> buscar= Arrays.asList({{positionx, positiony}});
+            //List<int[][][]> columnasList = new ArrayList<int[][][]>();
+            //columnasList.add(columnas);
+            bb:
+            for (int v=0;v<columnas[mmgvo].length;v++){
+                        int[] name = columnas[mmgvo][v];
+                        System.out.println(String.valueOf(buscar[0]==name[0] && buscar[1]==name[1]));
+                        List<int[]> naming= new ArrayList<int[]>();
+                        naming.add(name);
+                        if (!(name==buscar)){
+                            continue aa;
+                        }
+                        /*if (!(naming.contains(buscar))){
+                            naming.clear();
+                              continue aa;
+                              //continue bb;
+                        } */
             }
+            //columnasList.get(mmgvo).contains(buscar);
+            //Arrays.asList(columnas[mmgvo]);
+            /*if (!(Arrays.asList(columnas[mmgvo]).contains(buscar))) {
+                continue;
+            }*/
             int cop = 0, cme = 0;
             for (int[] fuerza : columnas[mmgvo]) {
                 int tilex = fuerza[0];
@@ -266,19 +290,19 @@ public class Lavieja {
                 int cuadricula = this.Board[tilex][tiley];
                 if (cuadricula == Jugador) {
                     cme++;
-                } else if (cuadricula == 1 && cuadricula != Jugador) {
+                } else if (cuadricula > 0 && cuadricula != Jugador) {
                     cop++;
                 }
             }
-            if ((!(cop == 0)) && (cme == 2)) {
+            if ((cme == 2) && (cop == 0)) {
                 total += 10;
                 break;
             }
-            if (cme == 1 && !(cop == 0)) {
+            if ((cme == 1) && (cop == 0)) {
                 total += 2;
                 break;
             }
-            if ((cme == 0) && (cop == 0)) {
+            if (!(cme > 0) && !(cop > 0) && (cop == 0) && (cme == 0)) {
                 total += 1;
                 break;
             }
@@ -303,7 +327,7 @@ public class Lavieja {
             if (Jugador == this.JUGADOR_A) {
                 return this.JUGADOR_B;
             } else {
-                return this.JUGADOR_B;
+                return this.JUGADOR_A;
             }
         }
 
@@ -333,12 +357,13 @@ public class Lavieja {
             return null;
         }
         if (stopoponent) {
-            bestrating.setBestRating(0);
+            //bestrating.setBestRating(0);
             obestpost = this.getBestMove(this.getOpponent(Jugador), false, bestrating);
         }
 
         List<int[]> arrayBest;
         arrayBest = new ArrayList<>();
+        arrayBest.clear();
         int rating = 0;
         bestrating.setBestRating(0);
         for (int b = 0; b < this.Board.length; b++) {
@@ -348,6 +373,7 @@ public class Lavieja {
                     if (rating > bestrating.getBestRating()) {
                         int[] alcaraban = {b, c};
                         arrayBest.add(alcaraban);
+                        System.out.println("entre al rating mejor"+alcaraban[0]);
                         //arrayBest[][]={{b,c}};
                         bestrating.setBestRating(rating);
                     } else if (rating == bestrating.getBestRating()) {
@@ -357,9 +383,9 @@ public class Lavieja {
                 }
             }
         }
-        if ((stopoponent) && (bestrating.getBestRating() <= 10)) {
-           // Random randomGenerator = new Random();
-           // int randNumber = randomGenerator.nextInt(arrayBest.size());
+        if ((stopoponent) && (bestrating.getBestRating() >= 10) ) {
+            // Random randomGenerator = new Random();
+            // int randNumber = randomGenerator.nextInt(arrayBest.size());
             //int[] obestpost = arrayBest.get(randNumber);
 
             return obestpost;
@@ -367,11 +393,12 @@ public class Lavieja {
             if (arrayBest.size() > 0) {
                 Random randomGenerator = new Random();
                 int randNumber = randomGenerator.nextInt(arrayBest.size());
-                return arrayBest.get(randNumber);
+                return arrayBest.get(arrayBest.size()-1);
+            } else {
+                return null;
             }
         }
-        return null;
-       
+
     }
 
     //////////////////////////////////////////////////////////////////////// 

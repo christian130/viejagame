@@ -9,6 +9,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Lavieja {
 
@@ -78,9 +79,12 @@ public class Lavieja {
      * Modificaciones:  se utiliza la estructura Arrays.asList() para convertir el arreglo a una lista List<int> lista = new ArrayList<int>
      */
     public boolean revisarCuadricula(int abcisa, int ordenada) {
-        int[] arreglo = {0, 1, 2};
+        List<Integer> listaArreglo = new ArrayList<Integer>();        
+        listaArreglo.add(0);
+        listaArreglo.add(1);
+        listaArreglo.add(3);
         boolean jk = false;
-        if (!(Arrays.asList(arreglo).contains(abcisa)) || !(Arrays.asList(arreglo).contains(ordenada))) {
+        if (!(listaArreglo.contains(abcisa)) || !(listaArreglo.contains(ordenada))) {
             jk = false;
         } else {
             jk = true;
@@ -99,9 +103,9 @@ public class Lavieja {
     public boolean revisarJugador(int jugador) {
         int[] jugadores = {JUGADOR_A, JUGADOR_B};
         if (Arrays.asList(jugadores).contains(jugador)) {
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
     }
 
@@ -313,7 +317,6 @@ public class Lavieja {
      * Descripcion: favor remitirse en la seccion adicional de la explicacion de esta clase en la parte superior de la misma   *
      * Modificaciones:   si precisa de una explicacion de la misma favor enviar correo a christian130@gmail.com * 
      */
-
     /**
      *
      * @param Jugador
@@ -321,9 +324,18 @@ public class Lavieja {
      * @param bestrating
      * @return
      */
+    public int[] getBestMove(int Jugador, boolean stopoponent, int bestrating) {
+        int[] obestpost={};
+        if (!this.revisarJugador(Jugador)) {
+            return null;
+        } else if (this.seAcabo()) {
+            return null;
+        }
+        if (stopoponent) {
+            int orating = 0;
+            obestpost=this.getBestMove(this.getOpponent(Jugador),false,orating);
+        }
 
-    public List<int[]> getBestMove(int Jugador, boolean stopoponent, int bestrating) {
-       // int[][] arrayBest = {{0,1}};
         List<int[]> arrayBest;
         arrayBest = new ArrayList<>();
         int rating = 0;
@@ -333,19 +345,42 @@ public class Lavieja {
                 rating = this.calificaMovimientos(Jugador, b, c);
                 if (rating != -1) {
                     if (rating > bestrating) {
-                        int[] alcaraban={b,c};
+                        int[] alcaraban = {b, c};
                         arrayBest.add(alcaraban);
                         //arrayBest[][]={{b,c}};
-                        bestrating=rating;                   
-                    }else if(rating==bestrating){
-                        int[] alcaraban={b,c};
+                        bestrating = rating;
+                    } else if (rating == bestrating) {
+                        int[] alcaraban = {b, c};
                         arrayBest.add(alcaraban);
                     }
                 }
             }
         }
-        if (stopoponent)
+        if (stopoponent && bestrating < 10) {            
+            return obestpost;
+        } else {
+            if (arrayBest.size() > 0) {
+                Random randomGenerator = new Random();
+                int randNumber = randomGenerator.nextInt(arrayBest.size());
+                return arrayBest.get(randNumber);
+            }
+        }
         return null;
+    }
+    //////////////////////////////////////////////////////////////////////// 
+    /* Salida: (boolean)
+     *  Creado por : Christian Vivas Santiago christian130@gmail.com
+     * Fecha Creación: 05-07-2018	
+	 * Fecha Modificacion: 10-07-2018 
+     * Descripcion: favor remitirse en la seccion adicional de la explicacion de esta clase en la parte superior de la misma   *
+     * Modificaciones:   si precisa de una explicacion de la misma favor enviar correo a christian130@gmail.com * 
+     */
+    public boolean jugar(int Jugador, int positionX, int positionY){
+        if (!this.revisarJugador(Jugador)){return false;}
+        else if (!this.estaDisponible(positionX, positionY)){return false;}
+        else if (this.seAcabo()){return false;}
+        int g=this.Board[positionX][positionY];
+        return true;
     }
     /*public static void main(String[] args)
 	{

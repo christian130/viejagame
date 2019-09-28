@@ -7,6 +7,7 @@ package vista;
 
 import java.util.Arrays;
 import controlador.Lavieja;
+import controlador.Lavieja.bestRatingClass;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -47,12 +48,18 @@ public class JavaApplication3 {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException {
-       // Random randomGenerator = new Random();
+    public static void jugar() throws IOException{
+           // Random randomGenerator = new Random();
        // int randNumber = randomGenerator.nextInt(0);
         //System.out.println(String.valueOf(randNumber));
        // System.exit(0);
+       
         Lavieja lavieja = new Lavieja("nuevojuego");
+        Lavieja.bestRatingClass bestrating = lavieja.new bestRatingClass();
+        if (lavieja.seAcabo()){
+            System.err.println("----------se acabo-----");
+        }
+        
 
         //lavieja.jugar(0, 0, 0)
         //System.out.println(String.valueOf(!lavieja.revisarCuadricula(1, 1)));
@@ -63,8 +70,19 @@ public class JavaApplication3 {
         lavieja.jugar(lavieja.JUGADOR_A, Integer.valueOf(jugadaX), Integer.valueOf(jugadaY));
         List<int[]> resultado = new ArrayList<int[]>();
         int counter = 0;
-        System.err.println(String.valueOf(lavieja.getBestMove(lavieja.JUGADOR_B, false, 0)[0]));
-        System.err.println(String.valueOf(lavieja.getBestMove(lavieja.JUGADOR_B, false, 0)[1]));
+        System.err.println(String.valueOf(lavieja.getBestMove(lavieja.JUGADOR_B, true, bestrating)[0]));
+        System.err.println(String.valueOf(lavieja.getBestMove(lavieja.JUGADOR_B, true, bestrating)[1]));
+        
+    }
+    
+    public static void main(String[] args) throws IOException {
+        while(true){
+            jugar();
+            //String jugadaX2 = br.readLine();
+            //String jugadaY2 = br.readLine();
+        }
+        
+    
         /* while (!lavieja.seAcabo()) {
             resultado.add(lavieja.getBestMove(lavieja.JUGADOR_B, false, 0));            
             

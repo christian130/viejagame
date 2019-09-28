@@ -79,10 +79,10 @@ public class Lavieja {
      * Modificaciones:  se utiliza la estructura Arrays.asList() para convertir el arreglo a una lista List<int> lista = new ArrayList<int>
      */
     public boolean revisarCuadricula(int abcisa, int ordenada) {
-        List<Integer> listaArreglo = new ArrayList<Integer>();        
+        List<Integer> listaArreglo = new ArrayList<Integer>();
         listaArreglo.add(0);
         listaArreglo.add(1);
-        listaArreglo.add(3);
+        listaArreglo.add(2);
         boolean jk = false;
         if (!(listaArreglo.contains(abcisa)) || !(listaArreglo.contains(ordenada))) {
             jk = false;
@@ -324,39 +324,44 @@ public class Lavieja {
      * @param bestrating
      * @return
      */
-    public int[] getBestMove(int Jugador, boolean stopoponent, int bestrating) {
-        int[] obestpost={};
+    public int[] getBestMove(int Jugador, boolean stopoponent, bestRatingClass bestrating) {
+        int[] obestpost = null;
+
         if (!this.revisarJugador(Jugador)) {
             return null;
         } else if (this.seAcabo()) {
             return null;
         }
         if (stopoponent) {
-            int orating = 0;
-            obestpost=this.getBestMove(this.getOpponent(Jugador),false,orating);
+            bestrating.setBestRating(0);
+            obestpost = this.getBestMove(this.getOpponent(Jugador), false, bestrating);
         }
 
         List<int[]> arrayBest;
         arrayBest = new ArrayList<>();
         int rating = 0;
-        bestrating = 0;
+        bestrating.setBestRating(0);
         for (int b = 0; b < this.Board.length; b++) {
             for (int c = 0; c < this.Board[b].length; c++) {
                 rating = this.calificaMovimientos(Jugador, b, c);
                 if (rating != -1) {
-                    if (rating > bestrating) {
+                    if (rating > bestrating.getBestRating()) {
                         int[] alcaraban = {b, c};
                         arrayBest.add(alcaraban);
                         //arrayBest[][]={{b,c}};
-                        bestrating = rating;
-                    } else if (rating == bestrating) {
+                        bestrating.setBestRating(rating);
+                    } else if (rating == bestrating.getBestRating()) {
                         int[] alcaraban = {b, c};
                         arrayBest.add(alcaraban);
                     }
                 }
             }
         }
-        if (stopoponent && bestrating < 10) {            
+        if ((stopoponent) && (bestrating.getBestRating() <= 10)) {
+           // Random randomGenerator = new Random();
+           // int randNumber = randomGenerator.nextInt(arrayBest.size());
+            //int[] obestpost = arrayBest.get(randNumber);
+
             return obestpost;
         } else {
             if (arrayBest.size() > 0) {
@@ -366,7 +371,9 @@ public class Lavieja {
             }
         }
         return null;
+       
     }
+
     //////////////////////////////////////////////////////////////////////// 
     /* Salida: (boolean)
      *  Creado por : Christian Vivas Santiago christian130@gmail.com
@@ -375,12 +382,29 @@ public class Lavieja {
      * Descripcion: favor remitirse en la seccion adicional de la explicacion de esta clase en la parte superior de la misma   *
      * Modificaciones:   si precisa de una explicacion de la misma favor enviar correo a christian130@gmail.com * 
      */
-    public boolean jugar(int Jugador, int positionX, int positionY){
-        if (!this.revisarJugador(Jugador)){return false;}
-        else if (!this.estaDisponible(positionX, positionY)){return false;}
-        else if (this.seAcabo()){return false;}
-        int g=this.Board[positionX][positionY];
+    public boolean jugar(int Jugador, int positionX, int positionY) {
+        if (!this.revisarJugador(Jugador)) {
+            return false;
+        } else if (!this.estaDisponible(positionX, positionY)) {
+            return false;
+        } else if (this.seAcabo()) {
+            return false;
+        }
+        this.Board[positionX][positionY] = Jugador;
         return true;
+    }
+
+    public class bestRatingClass {
+
+        private int bestRating;
+
+        public void setBestRating(int bestRating) {
+            this.bestRating = bestRating;
+        }
+
+        public int getBestRating() {
+            return bestRating;
+        }
     }
     /*public static void main(String[] args)
 	{
